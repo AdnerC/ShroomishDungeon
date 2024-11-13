@@ -31,8 +31,8 @@ public class Map {
     public boolean isOnKey(int playerX, int playerY){
         if ((playerX==keyX)&&(playerY==keyY)){
             return true;
-        }else{
-            return true;
+        }else {
+            return false;
         }
     }
 
@@ -40,7 +40,7 @@ public class Map {
         if ((playerX==doorX)&&(playerY==doorY)){
             return true;
         }else{
-            return true;
+            return false;
         }
     }
 
@@ -48,7 +48,7 @@ public class Map {
         if ((playerX==armourX)&&(playerY==armourY)){
             return true;
         }else{
-            return true;
+            return false;
         }
     }
 
@@ -56,8 +56,12 @@ public class Map {
         if ((playerX==healthX)&&(playerY==healthY)){
             return true;
         }else{
-            return true;
+            return false;
         }
+    }
+
+    public String getKey(){
+        return (""+keyX+" " + keyY);
     }
 
 
