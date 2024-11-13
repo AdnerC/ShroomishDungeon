@@ -1,11 +1,11 @@
 public class Player {
-    private int health;
-    private int strong;
-    private int speed;
-    private int level;
-    private int defense;
+    private double health;
+    private double strong;
+    private double speed;
+    private double level;
+    private double defense;
 
-    public Player(int health, int strong,int speed,int level, int defense){
+    public Player(double health, double strong,double speed,double level, double defense){
         this.health = health;
         this.strong = strong;
         this.speed = speed;
@@ -13,43 +13,46 @@ public class Player {
         this.defense = defense;
     }
 
-    public int takeDamage(int enemyHit){
-        int damageDealt = enemyHit-defense;
-       return damageDealt;
+    public double takeDamage(double enemyHit){
+        return enemyHit-defense;
     }
 
-    public int dealDamage(int playerHit, int enemyDefense){
-        int damageDealt = playerHit-enemyDefense;
-        return damageDealt;
+    public double dealDamage(double playerHit, double enemyDefense){
+        return playerHit-enemyDefense;
+    }
+
+    public void changeHealth(double dmg){
+        health += dmg;
     }
 
     public void levelUp(){
-        health++;
-        speed++;
-        strong++;
-        level++;
-        defense++;
+        health+=2;
+        speed+=2;
+        strong+=2;
+        level+=2;
+        defense+=2;
     }
 
-    public int getHealth (){
+    public double getHealth (){
         return health;
     }
 
-    public int getStrong (){
+    public double getStrong (){
         return strong;
     }
 
-    public int getSpeed (){
+    public double getSpeed (){
         return speed;
     }
 
-    public int getLevel (){
+    public double getLevel (){
         return level;
     }
 
-    public int getDefense (){
+    public double getDefense (){
         return defense;
     }
+
 
 
 }
