@@ -104,38 +104,48 @@ public class Main {
                 }
             }
 
-//            if (gameMap.encounterChance() > 70) {
-//                if (gameMap.randomEncounter() == 1) {
-//                    System.out.println("A small goblin approaches looking for a fight.");
-//                    System.out.println("What do you want to do? (1 fight / 2  run attempt)");
-//                    String fightOption = s.nextLine();
-//                    int combat = Integer.parseInt(number);
-//                    if (combat == 1) {
-//
-//                        double goblinHealth = 100;
-//
-//                        while (goblinHealth > 0) {
-//                            double goblinDmg = 7 * randomness;
-//                            double playerHit = player.getStrong() * randomness;
-//                            System.out.println("You did " + player.dealDamage(playerHit, 5) + " damage!");
-//                            System.out.println("The goblin hit you for " + player.takeDamage(goblinDmg) + "damage!");
-//                            player.changeHealth(-1 * (player.takeDamage(goblinDmg)));
-//                            goblinHealth -= player.dealDamage(playerHit, 5);
-//                        }
-//
-//
-//                    } else {
-//                        if (player.getSpeed() > (40 * randomness)) {
-//                            System.out.println("you managed to escape!");
-//                        }
-//                    }
-//                }
+            if (gameMap.encounterChance() > 70) {
+                if (gameMap.randomEncounter() == 1) {
+                    System.out.println("A small goblin approaches looking for a fight.");
+                    System.out.println("What do you want to do? (1 fight / 2 run attempt)");
+                    String fightOption = s.nextLine();
+                    int combat = Integer.parseInt(fightOption);
+                    if (combat == 1) {
+                        double goblinHealth = 100;
 
-                System.out.println("");
-                System.out.println(playerX);
-                System.out.println(playerY);
-                System.out.println("");
-                System.out.println(gameMap.getKey());
+                        while (goblinHealth > 0 && player.getHealth() > 0) {
+                            double goblinDmg = 7 * randomness;
+                            double playerHit = player.getStrong() * randomness;
+
+                            System.out.println("You did " + player.dealDamage(playerHit, 5) + " damage!");
+                            System.out.println("The goblin hit you for " + player.takeDamage(goblinDmg) + " damage!");
+
+                            player.changeHealth(-1 * player.takeDamage(goblinDmg));
+                            goblinHealth -= player.dealDamage(playerHit, 5);
+                            System.out.println("A small goblin approaches looking for a fight.");
+                            System.out.println("What do you want to do? (1 fight / 2 run attempt)");
+                             fightOption = s.nextLine();
+                             combat = Integer.parseInt(fightOption);
+
+                        }
+
+                        if (player.getHealth() <= 0) {
+                            System.out.println("The goblin defeated you. Game over.");
+                            gameWon = true;
+                        } else {
+                            System.out.println("You defeated the goblin!");
+                        }
+                    } else {
+                        if (player.getSpeed() > (40 * randomness)) {
+                            System.out.println("You managed to escape!");
+                        } else {
+                            System.out.println("You failed to escape and must fight!");
+                            combat = 1;
+                        }
+                    }
+                }
+            }
+
 
                 if ((gameMap.isOnKey(playerX, playerY))) {
                     gotKey = true;
@@ -163,6 +173,8 @@ public class Main {
                     "⠠⢿⣿⣷⣶⣶⣶⠶⢶⡶⢶⣶⣶⣶⣶⢿⣶⣤⣄⣀⣀⠀⠀⠀⢨⠀⣿⡇\n" +
                     "⠀⠀⠀⠈⠀⠐⠒⠒⠀⠀⠀⠘⠁⠈⠀⠀⠀⠀⠉⠉⢛⠉⠑⠒⠠⠤⢿⠇");
             System.out.println("You escaped the dungeon!");
+
+
 
         }
     }
