@@ -1,5 +1,6 @@
 import java.util.Scanner;//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
+
 public class Main {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
@@ -17,6 +18,7 @@ public class Main {
         int healthX;
         int healthY;
         double randomness = (((double) (Math.random() * 30) + 85) / 100);
+        boolean gotArmour = false;
 
         System.out.println("Would you like to play the default map, or have someone create one? (1 for default, 2 for custom)");
         String number = s.nextLine();
@@ -61,8 +63,8 @@ public class Main {
             healthY = Integer.parseInt(healthYString);
 
         }
+
         Map gameMap = new Map(keyX, keyY, doorX, doorY, armourX, armourY, healthX, healthY);
-        System.out.println(keyX);
 
         while (!gameWon) {
             System.out.println("What direction do you want to move ? (the grid is 11x11) w = up / s = down / a = left / d = right ");
@@ -104,50 +106,79 @@ public class Main {
                 }
             }
 
-            if (gameMap.encounterChance() > 70) {
-                if (gameMap.randomEncounter() == 1) {
+            if (gameMap.encounterChance() > 80) {
+                int encounter = gameMap.randomEncounter();
+                if (encounter == 1) {
                     System.out.println("A small goblin approaches looking for a fight.");
-                    System.out.println("What do you want to do? (1 fight / 2 run attempt)");
-                    String fightOption = s.nextLine();
-                    int combat = Integer.parseInt(fightOption);
-                    if (combat == 1) {
-                        double goblinHealth = 100;
 
-                        while (goblinHealth > 0 && player.getHealth() > 0) {
+                    double goblinHealth = 100;
+
+                    while (goblinHealth > 0 && player.getHealth() > 0) {
+                        System.out.println("What do you want to do? (1 fight / 2 run attempt)");
+                        String fightOption = s.nextLine();
+                        int combat = Integer.parseInt(fightOption);
+
+                        if (combat == 2) {
+                            double escapeChance = player.getSpeed() * randomness;
+                            double requiredEscapeChance = 40 * randomness;
+
+                            if (escapeChance > requiredEscapeChance) {
+                                System.out.println("You managed to escape!");
+                                return;
+                            } else {
+                                System.out.println("You failed to escape and must fight!");
+                            }
+                        }
+
+                        if (combat == 1) {
                             double goblinDmg = 7 * randomness;
                             double playerHit = player.getStrong() * randomness;
 
                             System.out.println("You did " + player.dealDamage(playerHit, 5) + " damage!");
-                            System.out.println("The goblin hit you for " + player.takeDamage(goblinDmg) + " damage!");
-
-                            player.changeHealth(-1 * player.takeDamage(goblinDmg));
                             goblinHealth -= player.dealDamage(playerHit, 5);
-                            System.out.println("A small goblin approaches looking for a fight.");
-                            System.out.println("What do you want to do? (1 fight / 2 run attempt)");
-                             fightOption = s.nextLine();
-                             combat = Integer.parseInt(fightOption);
 
+                            if (goblinHealth > 0) {
+                                System.out.println("The goblin hit you for " + player.takeDamage(goblinDmg) + " damage!");
+                                player.changeHealth(-1 * player.takeDamage(goblinDmg));
+                            }
                         }
+                    }
 
-                        if (player.getHealth() <= 0) {
-                            System.out.println("The goblin defeated you. Game over.");
-                            gameWon = true;
-                        } else {
-                            System.out.println("You defeated the goblin!");
-                        }
-                    } else {
-                        if (player.getSpeed() > (40 * randomness)) {
-                            System.out.println("You managed to escape!");
-                        } else {
-                            System.out.println("You failed to escape and must fight!");
-                            combat = 1;
-                        }
+                    if (player.getHealth() <= 0) {
+                        System.out.println("The goblin defeated you. Game over.");
+                        gameWon = true;
+                    } else if (goblinHealth <= 0) {
+                        System.out.println("You defeated the goblin!");
+                        player.levelUp();
+                    }
+                } else if (encounter == 4) {
+                    System.out.println("You found a small bandage");
+                    if (player.getHealth() >= 100){
+                        System.out.println("Your already healthy as can be!");
+                    }else {
+                        System.out.println("You heal a small amount!");
+                        player.changeHealth(10);
                     }
                 }
             }
 
+            if ((gameMap.isOnArmour(playerX, playerY)) && !(gotArmour)){
+                System.out.println("You found some armour!");
+                player.getArmour();
+                gotArmour = true;
 
-                if ((gameMap.isOnKey(playerX, playerY))) {
+            }
+
+            if (gameMap.isOnHealth(playerX,playerY)){
+                System.out.println("You found a complete medkit! ");
+                System.out.println("You feel completely rejuvenated ");
+
+                player.changeHealth(100-player.getHealth());
+
+
+            }
+
+            if ((gameMap.isOnKey(playerX, playerY))) {
                     gotKey = true;
                     System.out.println("You got the key!");
                 }
@@ -173,8 +204,19 @@ public class Main {
                     "⠠⢿⣿⣷⣶⣶⣶⠶⢶⡶⢶⣶⣶⣶⣶⢿⣶⣤⣄⣀⣀⠀⠀⠀⢨⠀⣿⡇\n" +
                     "⠀⠀⠀⠈⠀⠐⠒⠒⠀⠀⠀⠘⠁⠈⠀⠀⠀⠀⠉⠉⢛⠉⠑⠒⠠⠤⢿⠇");
             System.out.println("You escaped the dungeon!");
+            for (int i = 0; i < 50; ++i) {
+            System.out.println();
+            }
+
+        System.out.println("But then suddenly a disgustingly large appears in the middle of the street, he is all red, and he looks like a weird stubby mushroom.");
+        System.out.println("");
+        System.out.println("He starts running towards you!");
 
 
 
-        }
+
+
+
+
+    }
     }
