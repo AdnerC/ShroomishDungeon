@@ -25,7 +25,7 @@ public class Map {
     }
 
     public int randomEncounter(){
-        return (int) (Math.random()*2)+1;
+        return (int) (Math.random()*3 )+1;
     }
 
     public boolean isOnKey(int playerX, int playerY){
