@@ -21,8 +21,12 @@ public class Player {
         return playerHit-enemyDefense;
     }
 
-    public void changeHealth(double dmg){
-        health += dmg;
+    public void changeHealth(double health){
+        health += health;
+    }
+
+    public void getArmour(){
+        defense += 30;
     }
 
     public void levelUp(){
