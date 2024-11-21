@@ -60,9 +60,5 @@ public class Map {
         }
     }
 
-    public String getKey(){
-        return (""+keyX+" " + keyY);
-    }
-
 
 }

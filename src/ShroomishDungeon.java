@@ -23,18 +23,20 @@ public class ShroomishDungeon {
         double randomness = (((Math.random() * 20) + 95) / 100);
         boolean gotArmour = false;
         String number = "";
-        System.out.println("Would you like to play the default map, or have someone create one? (1 for default, 2 for custom)");
-        number = s.nextLine();
-        while(!mapInt){
-            if (!Objects.equals(number, "1") && !Objects.equals(number, "2")) {
-                System.out.println("Sorry, but that isn't an option!");
-                System.out.println("Would you like to play the default map, or have someone create one? (1 for default, 2 for custom)");
-                number = s.nextLine();
-            } else {
-                mapInt = true;
-            }
-        }
-        int choice = Integer.parseInt(number);
+        System.out.println("You will be playing the default map!");
+//        System.out.println("Would you like to play the default map, or have someone create one? (1 for default, 2 for custom)");
+//        number = s.nextLine();
+//        while(!mapInt){
+//            if (!Objects.equals(number, "1") && !Objects.equals(number, "2")) {
+//                System.out.println("Sorry, but that isn't an option!");
+//                System.out.println("Would you like to play the default map, or have someone create one? (1 for default, 2 for custom)");
+//                number = s.nextLine();
+//            } else {
+//                mapInt = true;
+//            }
+//        }
+//        int choice = Integer.parseInt(number);
+        int choice = 1;
 
 
         if (choice == 1) {
@@ -46,36 +48,58 @@ public class ShroomishDungeon {
             armourY = 9;
             healthX = 2;
             healthY = 5;
-        } else {
-            System.out.println("What would you like the X coordinate of the key to be? (grid is 11x11)");
-            String keyXString = s.nextLine();
-            keyX = Integer.parseInt(keyXString);
-            System.out.println("What would you like the Y coordinate of the key to be? (grid is 11x11)");
-            String keyYString = s.nextLine();
-            keyY = Integer.parseInt(keyYString);
-
-            System.out.println("What would you like the X coordinate of the door to be? (grid is 11x11)");
-            String doorXString = s.nextLine();
-            doorX = Integer.parseInt(doorXString);
-            System.out.println("What would you like the Y coordinate of the key to be? (grid is 11x11)");
-            String doorYString = s.nextLine();
-            doorY = Integer.parseInt(doorYString);
-
-            System.out.println("What would you like the X coordinate of the armour to be? (grid is 11x11)");
-            String armourXString = s.nextLine();
-            armourX = Integer.parseInt(armourXString);
-            System.out.println("What would you like the Y coordinate of the armour to be? (grid is 11x11)");
-            String armourYString = s.nextLine();
-            armourY = Integer.parseInt(armourYString);
-
-            System.out.println("What would you like the X coordinate of the health to be? (grid is 11x11)");
-            String healthXString = s.nextLine();
-            healthX = Integer.parseInt(healthXString);
-            System.out.println("What would you like the Y coordinate of the health to be? (grid is 11x11)");
-            String healthYString = s.nextLine();
-            healthY = Integer.parseInt(healthYString);
-
+        }else {
+            keyX = 6;
+            keyY = 2;
+            doorX = 10;
+            doorY = 4;
+            armourX = 3;
+            armourY = 9;
+            healthX = 2;
+            healthY = 5;
         }
+//        } else {
+//            System.out.println("Any numbers above 11 will get rounded to 11");
+//            System.out.println("What would you like the X coordinate of the key to be? (grid is 11x11)");
+//            String keyXString = s.nextLine();
+//            keyX = Integer.parseInt(keyXString);
+//            System.out.println("What would you like the Y coordinate of the key to be? (grid is 11x11)");
+//            String keyYString = s.nextLine();
+//            keyY = Integer.parseInt(keyYString);
+//            System.out.println();
+//            System.out.println("What would you like the X coordinate of the door to be? (grid is 11x11)");
+//            String doorXString = s.nextLine();
+//            doorX = Integer.parseInt(doorXString);
+//            System.out.println("What would you like the Y coordinate of the key to be? (grid is 11x11)");
+//            String doorYString = s.nextLine();
+//            doorY = Integer.parseInt(doorYString);
+//            System.out.println();
+//            System.out.println("What would you like the X coordinate of the armour to be? (grid is 11x11)");
+//            String armourXString = s.nextLine();
+//            armourX = Integer.parseInt(armourXString);
+//            System.out.println("What would you like the Y coordinate of the armour to be? (grid is 11x11)");
+//            String armourYString = s.nextLine();
+//            armourY = Integer.parseInt(armourYString);
+//            System.out.println();
+//            System.out.println("What would you like the X coordinate of the health to be? (grid is 11x11)");
+//            String healthXString = s.nextLine();
+//            healthX = Integer.parseInt(healthXString);
+//            System.out.println("What would you like the Y coordinate of the health to be? (grid is 11x11)");
+//            String healthYString = s.nextLine();
+//            healthY = Integer.parseInt(healthYString);
+//
+//            keyX = Player.fixValue(keyX, 1, 11);
+//            keyY = Player.fixValue(keyY, 1, 11);
+//            doorX = Player.fixValue(doorX, 1, 11);
+//            doorY = Player.fixValue(doorY, 1, 11);
+//            armourX = Player.fixValue(armourX, 1, 11);
+//            armourY = Player.fixValue(armourY, 1, 11);
+//            healthX = Player.fixValue(healthX, 1, 11);
+//            healthY = Player.fixValue(healthY, 1, 11);
+//
+//
+//        }
+
 
         Map gameMap = new Map(keyX, keyY, doorX, doorY, armourX, armourY, healthX, healthY);
 
@@ -136,7 +160,6 @@ public class ShroomishDungeon {
                         fightOption = s.nextLine();
                         boolean optionInt =false;
                         while (!optionInt){
-
                             if (!Objects.equals(fightOption, "1") && !Objects.equals(fightOption, "2")){
                                 System.out.println("Sorry, but that isn't an option!");
                                 System.out.println("What do you want to do? (1 fight / 2 run attempt)");
@@ -209,10 +232,7 @@ public class ShroomishDungeon {
             if (gameMap.isOnHealth(playerX,playerY)){
                 System.out.println("You found a complete medkit! ");
                 System.out.println("You feel completely rejuvenated ");
-
                 player.changeHealth(100-player.getHealth());
-
-
             }
 
             if ((gameMap.isOnKey(playerX, playerY))) {
@@ -220,11 +240,13 @@ public class ShroomishDungeon {
                     System.out.println("You got the key!");
                 }
 
-                if (gameMap.isOnDoor(playerX, playerY) && gotKey) {
+            if (gameMap.isOnDoor(playerX, playerY) && gotKey) {
                     gameWon = true;
-                }
-
+                }else if (gameMap.isOnDoor(playerX, playerY)){
+                System.out.println("You found the door, but need the key...");
             }
+
+        }
             System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⢀⣀⡠⠤⠴⠚⣿⠃\n" +
                     "⠀⠸⣿⡭⣭⣿⣽⣿⣿⣿⣿⣿⣿⣿⣽⣿⡿⠓⠚⠉⣉⣀⣤⡤⣴⠀⣿⠀\n" +
                     "⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢰⠞⢩⠀⢻⡏⠀⡏⠀⣿⠄\n" +

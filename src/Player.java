@@ -21,9 +21,13 @@ public class Player {
         return playerHit-enemyDefense;
     }
 
-    public void changeHealth(double health){
-        health += health;
+    public void changeHealth(double change){
+        this.health += change;
+        if (this.health > 100) {
+            this.health = 100; // Optional: Cap health at a maximum value of 100
+        }
     }
+
 
     public void getArmour(){
         defense += 30;
@@ -57,6 +61,11 @@ public class Player {
         return defense;
     }
 
+    public static int fixValue (int value, int min, int max) {
+        if (value > max) return max;
+        if (value < min) return min;
+        return value;
+    }
 
 
 }
