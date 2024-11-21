@@ -18,24 +18,13 @@ public class ShroomishDungeon {
         int doorY;
         int armourX;
         int armourY;
-         int healthX;
+        int healthX;
         int healthY;
         double randomness = (((Math.random() * 20) + 95) / 100);
         boolean gotArmour = false;
         String number = "";
         System.out.println("You will be playing the default map!");
-//        System.out.println("Would you like to play the default map, or have someone create one? (1 for default, 2 for custom)");
-//        number = s.nextLine();
-//        while(!mapInt){
-//            if (!Objects.equals(number, "1") && !Objects.equals(number, "2")) {
-//                System.out.println("Sorry, but that isn't an option!");
-//                System.out.println("Would you like to play the default map, or have someone create one? (1 for default, 2 for custom)");
-//                number = s.nextLine();
-//            } else {
-//                mapInt = true;
-//            }
-//        }
-//        int choice = Integer.parseInt(number);
+
         int choice = 1;
 
 
@@ -48,7 +37,7 @@ public class ShroomishDungeon {
             armourY = 9;
             healthX = 2;
             healthY = 5;
-        }else {
+        } else {
             keyX = 6;
             keyY = 2;
             doorX = 10;
@@ -58,53 +47,25 @@ public class ShroomishDungeon {
             healthX = 2;
             healthY = 5;
         }
-//        } else {
-//            System.out.println("Any numbers above 11 will get rounded to 11");
-//            System.out.println("What would you like the X coordinate of the key to be? (grid is 11x11)");
-//            String keyXString = s.nextLine();
-//            keyX = Integer.parseInt(keyXString);
-//            System.out.println("What would you like the Y coordinate of the key to be? (grid is 11x11)");
-//            String keyYString = s.nextLine();
-//            keyY = Integer.parseInt(keyYString);
-//            System.out.println();
-//            System.out.println("What would you like the X coordinate of the door to be? (grid is 11x11)");
-//            String doorXString = s.nextLine();
-//            doorX = Integer.parseInt(doorXString);
-//            System.out.println("What would you like the Y coordinate of the key to be? (grid is 11x11)");
-//            String doorYString = s.nextLine();
-//            doorY = Integer.parseInt(doorYString);
-//            System.out.println();
-//            System.out.println("What would you like the X coordinate of the armour to be? (grid is 11x11)");
-//            String armourXString = s.nextLine();
-//            armourX = Integer.parseInt(armourXString);
-//            System.out.println("What would you like the Y coordinate of the armour to be? (grid is 11x11)");
-//            String armourYString = s.nextLine();
-//            armourY = Integer.parseInt(armourYString);
-//            System.out.println();
-//            System.out.println("What would you like the X coordinate of the health to be? (grid is 11x11)");
-//            String healthXString = s.nextLine();
-//            healthX = Integer.parseInt(healthXString);
-//            System.out.println("What would you like the Y coordinate of the health to be? (grid is 11x11)");
-//            String healthYString = s.nextLine();
-//            healthY = Integer.parseInt(healthYString);
-//
-//            keyX = Player.fixValue(keyX, 1, 11);
-//            keyY = Player.fixValue(keyY, 1, 11);
-//            doorX = Player.fixValue(doorX, 1, 11);
-//            doorY = Player.fixValue(doorY, 1, 11);
-//            armourX = Player.fixValue(armourX, 1, 11);
-//            armourY = Player.fixValue(armourY, 1, 11);
-//            healthX = Player.fixValue(healthX, 1, 11);
-//            healthY = Player.fixValue(healthY, 1, 11);
-//
-//
-//        }
 
 
         Map gameMap = new Map(keyX, keyY, doorX, doorY, armourX, armourY, healthX, healthY);
 
+        System.out.println("You find yourself in a dark room...");
+        System.out.println("Arranged in a convenient 11x11 grid!");
+        System.out.println();
+        System.out.println("You find a note that reads: ");
+        System.out.println("There are a few items to help you escape...");
+        System.out.println("A med kit, some armour, a key and a door");
+        System.out.println("And a large amount of goblins");
+        System.out.println();
+        System.out.println("PS. Im waiting outside!");
+        System.out.println("PSS. the key should be a bit below you!");
+
+
+
         while (!gameWon) {
-            System.out.println("Your current location on the 11x11 grid is ("+ playerX+", "+playerY+")");
+            System.out.println("Your current location on the 11x11 grid is (" + playerX + ", " + playerY + ")");
             System.out.println();
             System.out.println("What direction do you want to move ? (the grid is 11x11) w = up / s = down / a = left / d = right ");
             String direction = s.nextLine();
@@ -151,21 +112,22 @@ public class ShroomishDungeon {
                     System.out.println("A small goblin approaches looking for a fight.");
 
                     double goblinHealth = 100;
+                    boolean escaped = false;
 
-                    while (goblinHealth > 0 && player.getHealth() > 0) {
+                    while (goblinHealth > 0 && player.getHealth() > 0 && !escaped) {
                         int combat = 0;
                         String fightOption = "";
 
                         System.out.println("What do you want to do? (1 fight / 2 run attempt)");
                         fightOption = s.nextLine();
-                        boolean optionInt =false;
-                        while (!optionInt){
-                            if (!Objects.equals(fightOption, "1") && !Objects.equals(fightOption, "2")){
+                        boolean optionInt = false;
+                        while (!optionInt) {
+                            if (!Objects.equals(fightOption, "1") && !Objects.equals(fightOption, "2")) {
                                 System.out.println("Sorry, but that isn't an option!");
                                 System.out.println("What do you want to do? (1 fight / 2 run attempt)");
                                 fightOption = s.nextLine();
 
-                            }else{
+                            } else {
                                 optionInt = true;
                             }
 
@@ -180,7 +142,7 @@ public class ShroomishDungeon {
 
                             if (escapeChance > requiredEscapeChance) {
                                 System.out.println("You managed to escape!");
-                                return;
+                                escaped = true;
                             } else {
                                 System.out.println("You failed to escape and must fight!");
                             }
@@ -194,10 +156,10 @@ public class ShroomishDungeon {
                             goblinHealth -= player.dealDamage(playerHit, 5);
 
                             if (goblinHealth > 0) {
-                                if (player.takeDamage(goblinDmg)>0){
+                                if (player.takeDamage(goblinDmg) > 0) {
                                     System.out.println("The goblin hit you for " + (int) player.takeDamage(goblinDmg) + " damage!");
                                     player.changeHealth(-1 * player.takeDamage(goblinDmg));
-                                }else {
+                                } else {
                                     System.out.println("The goblin hit you for no damage");
                                 }
                             }
@@ -213,73 +175,80 @@ public class ShroomishDungeon {
                     }
                 } else if (encounter == 4) {
                     System.out.println("You found a small bandage");
-                    if (player.getHealth() >= 100){
+                    if (player.getHealth() >= 100) {
                         System.out.println("Your already healthy as can be!");
-                    }else {
+                    } else {
                         System.out.println("You heal a small amount!");
                         player.changeHealth(10);
                     }
                 }
             }
 
-            if ((gameMap.isOnArmour(playerX, playerY)) && !(gotArmour)){
+            if ((gameMap.isOnArmour(playerX, playerY)) && !(gotArmour)) {
                 System.out.println("You found some armour!");
                 player.getArmour();
                 gotArmour = true;
 
             }
 
-            if (gameMap.isOnHealth(playerX,playerY)){
-                System.out.println("You found a complete medkit! ");
+            if (gameMap.isOnHealth(playerX, playerY)) {
+                System.out.println("You found a complete med kit! ");
                 System.out.println("You feel completely rejuvenated ");
-                player.changeHealth(100-player.getHealth());
+                player.changeHealth(100 - player.getHealth());
             }
 
             if ((gameMap.isOnKey(playerX, playerY))) {
-                    gotKey = true;
-                    System.out.println("You got the key!");
-                }
+                gotKey = true;
+                System.out.println("You got the key!");
+            }
 
             if (gameMap.isOnDoor(playerX, playerY) && gotKey) {
-                    gameWon = true;
-                }else if (gameMap.isOnDoor(playerX, playerY)){
+                gameWon = true;
+            } else if (gameMap.isOnDoor(playerX, playerY)) {
+                System.out.println();
                 System.out.println("You found the door, but need the key...");
+                System.out.println("Suddenly you hear \"I heard from a big mushroom the key is at coordinate (6, 2)...\"");
             }
 
         }
-            System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⢀⣀⡠⠤⠴⠚⣿⠃\n" +
-                    "⠀⠸⣿⡭⣭⣿⣽⣿⣿⣿⣿⣿⣿⣿⣽⣿⡿⠓⠚⠉⣉⣀⣤⡤⣴⠀⣿⠀\n" +
-                    "⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢰⠞⢩⠀⢻⡏⠀⡏⠀⣿⠄\n" +
-                    "⠀⢠⣟⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⠃⠀⣿⠂\n" +
-                    "⠀⢘⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⡇⠀⣿⡇\n" +
-                    "⠀⠈⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⣷⠀⣿⡇\n" +
-                    "⠀⣠⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⣿⣼⣿⡇\n" +
-                    "⠀⡃⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠘⠛⠛⠒⠛⠓⠛⠛⣿⣿⡇\n" +
-                    "⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢰⠦⢠⠀⢤⣤⣤⣄⠋⣿⡇\n" +
-                    "⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠈⣿⠀⣿⡇\n" +
-                    "⠀⢸⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⣿⠀⣿⡇\n" +
-                    "⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⣄⢸⠠⣼⡇⠀⣿⠀⣿⡇\n" +
-                    "⠀⣸⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠉⠉⠀⠛⠚⠯⠿⠀⣿⡇\n" +
-                    "⠠⢿⣿⣷⣶⣶⣶⠶⢶⡶⢶⣶⣶⣶⣶⢿⣶⣤⣄⣀⣀⠀⠀⠀⢨⠀⣿⡇\n" +
-                    "⠀⠀⠀⠈⠀⠐⠒⠒⠀⠀⠀⠘⠁⠈⠀⠀⠀⠀⠉⠉⢛⠉⠑⠒⠠⠤⢿⠇");
-            System.out.println("You escaped the dungeon!");
-            for (int i = 0; i < 50; ++i) {
+        System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⢀⣀⡠⠤⠴⠚⣿⠃\n" +
+                "⠀⠸⣿⡭⣭⣿⣽⣿⣿⣿⣿⣿⣿⣿⣽⣿⡿⠓⠚⠉⣉⣀⣤⡤⣴⠀⣿⠀\n" +
+                "⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢰⠞⢩⠀⢻⡏⠀⡏⠀⣿⠄\n" +
+                "⠀⢠⣟⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⠃⠀⣿⠂\n" +
+                "⠀⢘⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⡇⠀⣿⡇\n" +
+                "⠀⠈⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⣷⠀⣿⡇\n" +
+                "⠀⣠⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⣿⣼⣿⡇\n" +
+                "⠀⡃⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠘⠛⠛⠒⠛⠓⠛⠛⣿⣿⡇\n" +
+                "⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢰⠦⢠⠀⢤⣤⣤⣄⠋⣿⡇\n" +
+                "⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠈⣿⠀⣿⡇\n" +
+                "⠀⢸⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⣿⠀⣿⡇\n" +
+                "⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⣄⢸⠠⣼⡇⠀⣿⠀⣿⡇\n" +
+                "⠀⣸⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠉⠉⠀⠛⠚⠯⠿⠀⣿⡇\n" +
+                "⠠⢿⣿⣷⣶⣶⣶⠶⢶⡶⢶⣶⣶⣶⣶⢿⣶⣤⣄⣀⣀⠀⠀⠀⢨⠀⣿⡇\n" +
+                "⠀⠀⠀⠈⠀⠐⠒⠒⠀⠀⠀⠘⠁⠈⠀⠀⠀⠀⠉⠉⢛⠉⠑⠒⠠⠤⢿⠇");
+        System.out.println("You escaped the dungeon!");
+        Thread.sleep(5000);
+
+        for (int i = 0; i < 50; ++i) {
             System.out.println();
-            }
+        }
+
 
         System.out.println("But then suddenly a disgustingly large monster appears in the middle of the street. He is all red, and he looks like a weird stubby mushroom.");
+        Thread.sleep(2000);
+
+        System.out.println("He says his nam is Danijel ");
         System.out.println();
+        Thread.sleep(4000);
         System.out.println("He starts running towards you!");
         for (int i = 0; i < 50; ++i) {
             System.out.println();
         }
 
 
-
-
-
         System.out.println("QUICK TIME EVENT");
         System.out.println();
+        Thread.sleep(1000);
         System.out.println("He tries to grab you! Type 'duck' to evade within 3 seconds!");
 
         // Set up the timer task
@@ -290,8 +259,9 @@ public class ShroomishDungeon {
             }
         };
 
+        Thread.sleep(500);
         Timer timer = new Timer();
-        timer.schedule(failDuck, 2500); // Give the user 3 seconds to respond
+        timer.schedule(failDuck, 8000); // Give the user 3 seconds to respond
 
         // Capture user input
         String quickTimeEvent = s.nextLine();
@@ -305,7 +275,7 @@ public class ShroomishDungeon {
         }
 
 
-        Thread.sleep(200);
+        Thread.sleep(500);
 
 
         System.out.println("He tries to grab you! Type 'roll' to evade within 3 seconds!");
@@ -319,7 +289,7 @@ public class ShroomishDungeon {
         };
 
         Timer timer2 = new Timer();
-        timer2.schedule(failRoll, 2500); // Give the user 3 seconds to respond
+        timer2.schedule(failRoll, 8000); // Give the user 3 seconds to respond
 
         // Capture user input
         String rollTimeEvent = s.nextLine();
@@ -333,9 +303,6 @@ public class ShroomishDungeon {
         }
 
 
-
-
-
         System.out.println("He starts to swell, it looks like hes going to explode! Type 'sprint' to evade within 3 seconds!");
 
         // Set up the timer task
@@ -347,7 +314,7 @@ public class ShroomishDungeon {
         };
 
         Timer timer3 = new Timer();
-        timer3.schedule(failSprint, 3000); // Give the user 3 seconds to respond
+        timer3.schedule(failSprint, 8000); // Give the user 3 seconds to respond
 
         // Capture user input
         String sprintTimeEvent = s.nextLine();
@@ -355,7 +322,7 @@ public class ShroomishDungeon {
 
         // Check user input
         if (sprintTimeEvent.equalsIgnoreCase("sprint")) {
-            System.out.println("You sprint just in time! The monster monster explodes, but you managed to get awawy!!");
+            System.out.println("You sprint just in time! The monster monster explodes, but you managed to get away!!");
         } else {
             System.out.println("Wrong move! You try to run, but trip! ");
         }
@@ -363,4 +330,3 @@ public class ShroomishDungeon {
 
     }
 }
-
