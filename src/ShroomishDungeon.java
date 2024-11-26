@@ -6,7 +6,7 @@ import java.util.TimerTask;
 public class ShroomishDungeon {
     public static void main(String[] args) throws InterruptedException {
         Scanner s = new Scanner(System.in);
-        boolean gameWon = false;
+        boolean gameWon = false;//initializing all variables
         Player player = new Player(100, 25, 40, 1, 60);
         boolean mapInt = false;
         int playerX = 6;
@@ -25,31 +25,20 @@ public class ShroomishDungeon {
         String number = "";
         System.out.println("You will be playing the default map!");
 
-        int choice = 1;
+
+//default map
+        keyX = 6;
+        keyY = 2;
+        doorX = 10;
+        doorY = 4;
+        armourX = 3;
+        armourY = 9;
+        healthX = 2;
+        healthY = 5;
 
 
-        if (choice == 1) {
-            keyX = 6;
-            keyY = 2;
-            doorX = 10;
-            doorY = 4;
-            armourX = 3;
-            armourY = 9;
-            healthX = 2;
-            healthY = 5;
-        } else {
-            keyX = 6;
-            keyY = 2;
-            doorX = 10;
-            doorY = 4;
-            armourX = 3;
-            armourY = 9;
-            healthX = 2;
-            healthY = 5;
-        }
 
-
-        Map gameMap = new Map(keyX, keyY, doorX, doorY, armourX, armourY, healthX, healthY);
+        Map gameMap = new Map(keyX, keyY, doorX, doorY, armourX, armourY, healthX, healthY); // creating map object
 
         System.out.println("You find yourself in a dark room...");
         System.out.println("Arranged in a convenient 11x11 grid!");
@@ -63,14 +52,13 @@ public class ShroomishDungeon {
         System.out.println("PSS. the key should be a bit below you!");
 
 
-
-        while (!gameWon) {
+        while (!gameWon) {//loop until the game is won
             System.out.println("Your current location on the 11x11 grid is (" + playerX + ", " + playerY + ")");
             System.out.println();
             System.out.println("What direction do you want to move ? (the grid is 11x11) w = up / s = down / a = left / d = right ");
             String direction = s.nextLine();
 
-            if (direction.equals("a")) {
+            if (direction.equals("a")) {//checking the users direction
                 if (playerX == 1) {
                     System.out.println("You can't go that way, theres a wall...");
                 } else {
@@ -79,7 +67,7 @@ public class ShroomishDungeon {
                 }
             }
 
-            if (direction.equals("d")) {
+            if (direction.equals("d")) {//checking the users direction
                 if (playerX == 11) {
                     System.out.println("You can't go that way, theres a wall...");
                 } else {
@@ -88,7 +76,7 @@ public class ShroomishDungeon {
                 }
             }
 
-            if (direction.equals("s")) {
+            if (direction.equals("s")) {//checking the users direction
                 if (playerY == 1) {
                     System.out.println("You can't go that way, theres a wall...");
                 } else {
@@ -97,7 +85,7 @@ public class ShroomishDungeon {
                 }
             }
 
-            if (direction.equals("w")) {
+            if (direction.equals("w")) {//checking the users direction
                 if (playerY == 11) {
                     System.out.println("You can't go that way, theres a wall...");
                 } else {
@@ -106,15 +94,15 @@ public class ShroomishDungeon {
                 }
             }
 
-            if (gameMap.encounterChance() > 80) {
+            if (gameMap.encounterChance() > 80) {//checks if there is an encounter, 1/5 chance
                 int encounter = gameMap.randomEncounter();
-                if (encounter == 1) {
+                if (encounter == 1) {//checks which encounter it is 1/3 chance
                     System.out.println("A small goblin approaches looking for a fight.");
 
                     double goblinHealth = 100;
                     boolean escaped = false;
 
-                    while (goblinHealth > 0 && player.getHealth() > 0 && !escaped) {
+                    while (goblinHealth > 0 && player.getHealth() > 0 && !escaped) {//as long as the goblin is not dead, or the player is alive, or the player has not escaped
                         int combat = 0;
                         String fightOption = "";
 
@@ -136,7 +124,7 @@ public class ShroomishDungeon {
                         combat = Integer.parseInt(fightOption);
 
 
-                        if (combat == 2) {
+                        if (combat == 2) {//checks if they wanted to run
                             double escapeChance = player.getSpeed() * randomness;
                             double requiredEscapeChance = 40 * randomness;
 
@@ -148,7 +136,7 @@ public class ShroomishDungeon {
                             }
                         }
 
-                        if (combat == 1) {
+                        if (combat == 1) {//checks for attack
                             double goblinDmg = 60 * randomness;
                             double playerHit = player.getStrong() * randomness;
 
@@ -166,7 +154,7 @@ public class ShroomishDungeon {
                         }
                     }
 
-                    if (player.getHealth() <= 0) {
+                    if (player.getHealth() <= 0) { //the situations after the fight
                         System.out.println("The goblin defeated you. Game over.");
                         gameWon = true;
                     } else if (goblinHealth <= 0) {
@@ -184,25 +172,25 @@ public class ShroomishDungeon {
                 }
             }
 
-            if ((gameMap.isOnArmour(playerX, playerY)) && !(gotArmour)) {
+            if ((gameMap.isOnArmour(playerX, playerY)) && !(gotArmour)) {//checks for the player being on the same tile and not having already had armour
                 System.out.println("You found some armour!");
                 player.getArmour();
                 gotArmour = true;
 
             }
 
-            if (gameMap.isOnHealth(playerX, playerY)) {
+            if (gameMap.isOnHealth(playerX, playerY)) { //checks for the player being on the same tile as the medkit
                 System.out.println("You found a complete med kit! ");
                 System.out.println("You feel completely rejuvenated ");
                 player.changeHealth(100 - player.getHealth());
             }
 
-            if ((gameMap.isOnKey(playerX, playerY))) {
+            if ((gameMap.isOnKey(playerX, playerY))) {//checks for the player being on the same tile as the key
                 gotKey = true;
                 System.out.println("You got the key!");
             }
 
-            if (gameMap.isOnDoor(playerX, playerY) && gotKey) {
+            if (gameMap.isOnDoor(playerX, playerY) && gotKey) {//checks for the player being on the same tile as the door and has the key
                 gameWon = true;
             } else if (gameMap.isOnDoor(playerX, playerY)) {
                 System.out.println();
@@ -211,25 +199,26 @@ public class ShroomishDungeon {
             }
 
         }
-        System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⢀⣀⡠⠤⠴⠚⣿⠃\n" +
-                "⠀⠸⣿⡭⣭⣿⣽⣿⣿⣿⣿⣿⣿⣿⣽⣿⡿⠓⠚⠉⣉⣀⣤⡤⣴⠀⣿⠀\n" +
-                "⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢰⠞⢩⠀⢻⡏⠀⡏⠀⣿⠄\n" +
-                "⠀⢠⣟⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⠃⠀⣿⠂\n" +
-                "⠀⢘⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⡇⠀⣿⡇\n" +
-                "⠀⠈⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⣷⠀⣿⡇\n" +
-                "⠀⣠⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⣿⣼⣿⡇\n" +
-                "⠀⡃⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠘⠛⠛⠒⠛⠓⠛⠛⣿⣿⡇\n" +
-                "⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢰⠦⢠⠀⢤⣤⣤⣄⠋⣿⡇\n" +
-                "⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠈⣿⠀⣿⡇\n" +
-                "⠀⢸⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⣿⠀⣿⡇\n" +
-                "⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⣄⢸⠠⣼⡇⠀⣿⠀⣿⡇\n" +
-                "⠀⣸⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠉⠉⠀⠛⠚⠯⠿⠀⣿⡇\n" +
-                "⠠⢿⣿⣷⣶⣶⣶⠶⢶⡶⢶⣶⣶⣶⣶⢿⣶⣤⣄⣀⣀⠀⠀⠀⢨⠀⣿⡇\n" +
-                "⠀⠀⠀⠈⠀⠐⠒⠒⠀⠀⠀⠘⠁⠈⠀⠀⠀⠀⠉⠉⢛⠉⠑⠒⠠⠤⢿⠇");
+        System.out.println("""
+                ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⢀⣀⡠⠤⠴⠚⣿⠃
+                ⠀⠸⣿⡭⣭⣿⣽⣿⣿⣿⣿⣿⣿⣿⣽⣿⡿⠓⠚⠉⣉⣀⣤⡤⣴⠀⣿⠀
+                ⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢰⠞⢩⠀⢻⡏⠀⡏⠀⣿⠄
+                ⠀⢠⣟⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⠃⠀⣿⠂
+                ⠀⢘⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⡇⠀⣿⡇
+                ⠀⠈⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⣷⠀⣿⡇
+                ⠀⣠⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⣿⣼⣿⡇
+                ⠀⡃⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠘⠛⠛⠒⠛⠓⠛⠛⣿⣿⡇
+                ⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢰⠦⢠⠀⢤⣤⣤⣄⠋⣿⡇
+                ⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠈⣿⠀⣿⡇
+                ⠀⢸⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⠀⢸⠀⢸⡇⠀⣿⠀⣿⡇
+                ⠀⠀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⢸⣄⢸⠠⣼⡇⠀⣿⠀⣿⡇
+                ⠀⣸⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠉⠉⠀⠛⠚⠯⠿⠀⣿⡇
+                ⠠⢿⣿⣷⣶⣶⣶⠶⢶⡶⢶⣶⣶⣶⣶⢿⣶⣤⣄⣀⣀⠀⠀⠀⢨⠀⣿⡇
+                ⠀⠀⠀⠈⠀⠐⠒⠒⠀⠀⠀⠘⠁⠈⠀⠀⠀⠀⠉⠉⢛⠉⠑⠒⠠⠤⢿⠇""");
         System.out.println("You escaped the dungeon!");
         Thread.sleep(5000);
 
-        for (int i = 0; i < 50; ++i) {
+        for (int i = 0; i < 50; ++i) {//moves previous code out the way
             System.out.println();
         }
 
@@ -237,7 +226,7 @@ public class ShroomishDungeon {
         System.out.println("But then suddenly a disgustingly large monster appears in the middle of the street. He is all red, and he looks like a weird stubby mushroom.");
         Thread.sleep(2000);
 
-        System.out.println("He says his nam is Danijel ");
+        System.out.println("He says his name is Danijel ");
         System.out.println();
         Thread.sleep(4000);
         System.out.println("He starts running towards you!");
@@ -251,8 +240,8 @@ public class ShroomishDungeon {
         Thread.sleep(1000);
         System.out.println("He tries to grab you! Type 'duck' to evade within 3 seconds!");
 
-        // Set up the timer task
-        TimerTask failDuck = new TimerTask() {
+        TimerTask failDuck = new TimerTask() {// Set up the timer task
+
             public void run() {
                 System.out.println("You took too long! The monster grabs you and you lose!");
                 System.exit(0);
@@ -263,12 +252,10 @@ public class ShroomishDungeon {
         Timer timer = new Timer();
         timer.schedule(failDuck, 8000); // Give the user 3 seconds to respond
 
-        // Capture user input
-        String quickTimeEvent = s.nextLine();
+        String quickTimeEvent = s.nextLine();// Capture user input
         timer.cancel();
 
-        // Check user input
-        if (quickTimeEvent.equalsIgnoreCase("duck")) {
+        if (quickTimeEvent.equalsIgnoreCase("duck")) {// Check user input
             System.out.println("You duck just in time! The monster misses you!");
         } else {
             System.out.println("Wrong move! The monster grabs you, and tears a leg off");
@@ -280,8 +267,7 @@ public class ShroomishDungeon {
 
         System.out.println("He tries to grab you! Type 'roll' to evade within 3 seconds!");
 
-        // Set up the timer task
-        TimerTask failRoll = new TimerTask() {
+        TimerTask failRoll = new TimerTask() {// Set up the timer task
             public void run() {
                 System.out.println("You took too long! The monster grabs you and you lose!");
                 System.exit(0); // Exit the game
@@ -291,12 +277,12 @@ public class ShroomishDungeon {
         Timer timer2 = new Timer();
         timer2.schedule(failRoll, 8000); // Give the user 3 seconds to respond
 
-        // Capture user input
-        String rollTimeEvent = s.nextLine();
+
+        String rollTimeEvent = s.nextLine();// Capture user input
         timer2.cancel();
 
-        // Check user input
-        if (rollTimeEvent.equalsIgnoreCase("roll")) {
+
+        if (rollTimeEvent.equalsIgnoreCase("roll")) {// Check user input
             System.out.println("You roll just in time! The monster misses you!");
         } else {
             System.out.println("Wrong move! The monster bites you, and tears an arm off");
@@ -305,8 +291,8 @@ public class ShroomishDungeon {
 
         System.out.println("He starts to swell, it looks like hes going to explode! Type 'sprint' to evade within 3 seconds!");
 
-        // Set up the timer task
-        TimerTask failSprint = new TimerTask() {
+
+        TimerTask failSprint = new TimerTask() {// Set up the timer task
             public void run() {
                 System.out.println("You took too long! The monster explodes and leaves corrosive acid all over you!");
                 System.exit(0); // Exit the game
@@ -316,12 +302,12 @@ public class ShroomishDungeon {
         Timer timer3 = new Timer();
         timer3.schedule(failSprint, 8000); // Give the user 3 seconds to respond
 
-        // Capture user input
-        String sprintTimeEvent = s.nextLine();
+
+        String sprintTimeEvent = s.nextLine();// Capture user input
         timer3.cancel();
 
-        // Check user input
-        if (sprintTimeEvent.equalsIgnoreCase("sprint")) {
+
+        if (sprintTimeEvent.equalsIgnoreCase("sprint")) {// Check user input
             System.out.println("You sprint just in time! The monster monster explodes, but you managed to get away!!");
         } else {
             System.out.println("Wrong move! You try to run, but trip! ");
