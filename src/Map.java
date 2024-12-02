@@ -1,5 +1,5 @@
 /**
- * Represents a map in a game with specific coordinates for key items and locations such as a key, door,
+ * Represents a map in a game with coordinates for key items and locations such as a key, door,
  * armor, and health pack. Provides methods to determine player interactions with these items and locations,
  * as well as random encounter mechanics.
  */
@@ -20,17 +20,18 @@ public class Map {
     // Coordinates for the health pack location
     private final int healthX;
     private final int healthY;
+
     /**
      * Constructs a new Map with specified coordinates for key items and locations.
      *
-     * @param keyX     the x-coordinate of the key
-     * @param keyY     the y-coordinate of the key
-     * @param doorX    the x-coordinate of the door
-     * @param doorY    the y-coordinate of the door
-     * @param armourX  the x-coordinate of the armor
-     * @param armourY  the y-coordinate of the armor
-     * @param healthX  the x-coordinate of the health pack
-     * @param healthY  the y-coordinate of the health pack
+     * @param keyX the x-coordinate of the key
+     * @param keyY the y-coordinate of the key
+     * @param doorX the x-coordinate of the door
+     * @param doorY the y-coordinate of the door
+     * @param armourX the x-coordinate of the armor
+     * @param armourY the y-coordinate of the armor
+     * @param healthX the x-coordinate of the health pack
+     * @param healthY the y-coordinate of the health pack
      */
     public Map(int keyX, int keyY, int doorX, int doorY, int armourX, int armourY, int healthX, int healthY) {
         this.keyX = keyX;

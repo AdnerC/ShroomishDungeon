@@ -30,7 +30,7 @@ public class Player {
      * Calculates the damage taken by the player after accounting for their defense.
      *
      * @param enemyHit the raw damage dealt by the enemy
-     * @return the net damage taken by the player
+     * @return the actual damage taken by the player
      */
     public double takeDamage(double enemyHit){//calculates dmg taken
         return enemyHit-defense;
@@ -41,16 +41,16 @@ public class Player {
      *
      * @param playerHit    the raw damage dealt by the player
      * @param enemyDefense the enemy's defense value
-     * @return the net damage dealt to the enemy
+     * @return the actual damage dealt to the enemy
      */
     public double dealDamage(double playerHit, double enemyDefense){//calculates dmg done
         return playerHit-enemyDefense;
     }
 
     /**
-     * Modifies the player's health by a given amount. Health cannot exceed 100.
+     * Changes the player's health by a given amount. Health cannot exceed 100.
      *
-     * @param change the amount to adjust the player's health by (positive or negative)
+     * @param change the amount to adjust the player's health by
      */
     public void changeHealth(double change){//calculates a change in health
         this.health += change;
@@ -128,7 +128,7 @@ public class Player {
      * @param value the value to be clamped
      * @param min the minimum allowable value
      * @param max the maximum allowable value
-     * @return the clamped value
+     * @return the clamped value, if no clamping, returns original value
      */
     public static int fixValue (int value, int min, int max) {//clamps a value down to one of 2 either min or max
         if (value > max) return max;
